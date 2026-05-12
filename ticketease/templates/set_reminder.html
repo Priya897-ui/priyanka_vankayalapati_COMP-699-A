@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Set Reminder</h2>
+
+<div class="card">
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label><strong>Ticket ID:</strong></label>
+        <p>{{ ticket.id }}</p>
+
+        <label>Reminder Date:</label>
+        <input type="date" name="reminder_date" required>
+
+        <label>Message:</label>
+        <input type="text" name="message" placeholder="Enter reminder note">
+
+        <br><br>
+
+        <button type="submit" class="btn btn-primary">
+            Save Reminder
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

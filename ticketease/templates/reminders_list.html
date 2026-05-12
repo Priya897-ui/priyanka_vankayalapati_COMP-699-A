@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Your Reminders</h2>
+
+<div class="card">
+
+    {% if reminders %}
+    <table border="1" cellpadding="10" width="100%">
+        <tr>
+            <th>Ticket ID</th>
+            <th>Reminder Date</th>
+            <th>Message</th>
+            <th>Status</th>
+        </tr>
+
+        {% for reminder in reminders %}
+        <tr>
+            <td>{{ reminder.ticket.id }}</td>
+            <td>{{ reminder.reminder_date }}</td>
+            <td>{{ reminder.message }}</td>
+            <td>
+                {% if reminder.is_sent %}
+                    <span style="color: green;">Sent</span>
+                {% else %}
+                    <span style="color: orange;">Pending</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    {% else %}
+        <p>No reminders found.</p>
+    {% endif %}
+
+    <br>
+
+    <a href="/tickets/cases/" class="btn btn-primary">
+        Back to Cases
+    </a>
+
+</div>
+
+{% endblock %}

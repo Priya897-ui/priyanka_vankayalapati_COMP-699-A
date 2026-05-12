@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Dashboard</h2>
+
+<!-- ================= USER DASHBOARD ================= -->
+{% if not user.is_staff %}
+
+<div class="card">
+    <h3>Welcome, {{ user.username }}</h3>
+    <p>Manage your traffic tickets and get smart recommendations.</p>
+</div>
+
+<div class="card">
+    <h3>Quick Actions</h3>
+
+    <a href="/tickets/upload/" class="btn btn-primary">Upload Ticket</a>
+    <a href="/tickets/cases/" class="btn btn-success">View My Cases</a>
+    <a href="/reminders/list/" class="btn btn-primary">View Reminders</a>
+</div>
+
+<div class="card">
+    <h3>System Workflow</h3>
+    <p>
+        Enter ticket details → System processes data → AI predicts outcome → 
+        Risk Index calculated → Recommendation generated.
+    </p>
+</div>
+
+{% endif %}
+
+
+<!-- ================= ADMIN DASHBOARD ================= -->
+{% if user.is_staff %}
+
+<div class="card">
+    <h3>Admin Dashboard</h3>
+    <p>Monitor system performance and user activity.</p>
+</div>
+
+<div class="card">
+    <h3>System Statistics</h3>
+
+    <p><strong>Total Tickets:</strong> {{ total_tickets|default:"0" }}</p>
+    <p><strong>Total Predictions:</strong> {{ total_predictions|default:"0" }}</p>
+    <p><strong>Total Reminders:</strong> {{ total_reminders|default:"0" }}</p>
+</div>
+
+<div class="card">
+    <h3>Admin Actions</h3>
+
+    <a href="/adminpanel/ml-logs/" class="btn btn-primary">View ML Logs</a>
+    <a href="/adminpanel/ocr-logs/" class="btn btn-success">View OCR Logs</a>
+    <a href="/adminpanel/reports/" class="btn btn-primary">View Reports</a>
+</div>
+
+<div class="card">
+    <h3>System Overview</h3>
+    <p>
+        This system uses a Random Forest model to analyze ticket data,
+        calculate risk index, and provide decision guidance to users.
+    </p>
+</div>
+
+{% endif %}
+
+{% endblock %}

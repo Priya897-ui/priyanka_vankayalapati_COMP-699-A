@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card" style="max-width: 500px; margin: auto;">
+    <h2 style="text-align: center;">Register</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <!-- Username -->
+        <label>Username</label>
+        <input type="text" name="username" placeholder="Enter username" required>
+
+        <!-- Email -->
+        <label>Email</label>
+        <input type="email" name="email" placeholder="Enter email" required>
+
+        <!-- Password -->
+        <label>Password</label>
+        <input type="password" name="password1" placeholder="Enter password" required>
+
+        <!-- Confirm Password -->
+        <label>Confirm Password</label>
+        <input type="password" name="password2" placeholder="Confirm password" required>
+
+        <!-- Driver Info -->
+        <hr>
+
+        <h3>Driver Information</h3>
+
+        <label>License Number</label>
+        <input type="text" name="license_number" placeholder="Enter license number">
+
+        <label>Phone</label>
+        <input type="text" name="phone" placeholder="Enter phone number">
+
+        <!-- Driving History -->
+        <hr>
+
+        <h3>Driving History</h3>
+
+        <label>Past Violations</label>
+        <input type="number" name="past_violations" min="0" value="0">
+
+        <label>Accident History</label>
+        <input type="number" name="accident_history" min="0" value="0">
+
+        <!-- Errors -->
+        {% if form.errors %}
+            <div class="message error">
+                Please correct the errors in the form.
+            </div>
+        {% endif %}
+
+        <!-- Submit -->
+        <button type="submit" class="btn btn-success" style="width:100%;">
+            Register
+        </button>
+
+    </form>
+
+    <br>
+
+    <!-- Login Redirect -->
+    <p style="text-align:center;">
+        Already have an account?
+        <a href="/accounts/login/">Login here</a>
+    </p>
+</div>
+
+{% endblock %}

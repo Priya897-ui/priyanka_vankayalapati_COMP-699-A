@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card">
+    <h2>{% if ticket %}Edit Ticket{% else %}Enter Ticket Details{% endif %}</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <!-- Violation Type -->
+        <label>Violation Type</label>
+        <select name="violation_type" required>
+            <option value="">Select</option>
+            <option value="speeding" {% if ticket and ticket.violation_type == "speeding" %}selected{% endif %}>Speeding</option>
+            <option value="parking" {% if ticket and ticket.violation_type == "parking" %}selected{% endif %}>Parking</option>
+            <option value="signal violation" {% if ticket and ticket.violation_type == "signal violation" %}selected{% endif %}>Signal Violation</option>
+            <option value="no helmet" {% if ticket and ticket.violation_type == "no helmet" %}selected{% endif %}>No Helmet</option>
+            <option value="other" {% if ticket and ticket.violation_type == "other" %}selected{% endif %}>Other</option>
+        </select>
+
+        <!-- Location -->
+        <label>Location</label>
+        <input type="text" name="location"
+               value="{% if ticket %}{{ ticket.location }}{% endif %}"
+               placeholder="Enter location"
+               required>
+
+        <!-- Fine Amount -->
+        <label>Fine Amount (₹)</label>
+        <input type="number" name="fine_amount"
+               value="{% if ticket %}{{ ticket.fine_amount }}{% endif %}"
+               placeholder="Enter fine amount"
+               required>
+
+        <!-- Ticket Date -->
+        <label>Ticket Date</label>
+        <input type="date" name="ticket_date"
+               value="{% if ticket %}{{ ticket.ticket_date }}{% endif %}"
+               required>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">
+            {% if ticket %}Update Ticket{% else %}Process Ticket{% endif %}
+        </button>
+
+        <!-- Back Button -->
+        <a href="/tickets/cases/" class="btn btn-danger">Cancel</a>
+
+    </form>
+</div>
+
+<div class="card">
+    <h3>How It Works</h3>
+    <p>
+        Enter ticket details manually. The system simulates OCR extraction,
+        processes the data, applies machine learning, and provides a
+        recommendation based on risk analysis.
+    </p>
+</div>
+
+{% endblock %}

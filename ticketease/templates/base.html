@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TicketEase</title>
+
+    <!-- Link External CSS -->
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<div class="navbar">
+    <h2>TicketEase</h2>
+
+    <div class="nav-links">
+
+        {% if user.is_authenticated %}
+
+            <!-- USER NAVIGATION -->
+            <a href="/accounts/dashboard/">Dashboard</a>
+            <a href="/tickets/upload/">Upload Ticket</a>
+            <a href="/tickets/cases/">My Cases</a>
+            <a href="/reminders/list/">Reminders</a>
+
+            <!-- ADMIN NAVIGATION -->
+            {% if user.is_staff %}
+                <a href="/adminpanel/dashboard/">Admin Panel</a>
+                <a href="/adminpanel/ml-logs/">ML Logs</a>
+                <a href="/adminpanel/reports/">Reports</a>
+            {% endif %}
+
+            <a href="/accounts/logout/">Logout</a>
+
+        {% else %}
+            <a href="/accounts/login/">Login</a>
+            <a href="/accounts/register/">Register</a>
+        {% endif %}
+
+    </div>
+</div>
+
+<!-- ================= MESSAGES ================= -->
+<div class="container">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message {% if message.tags == 'success' %}success{% else %}error{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+<!-- ================= MAIN CONTENT ================= -->
+<div class="container">
+    {% block content %}
+    {% endblock %}
+</div>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+    <p>© 2026 TicketEase | Smart Traffic Ticket Assistance</p>
+</footer>
+
+</body>
+</html>

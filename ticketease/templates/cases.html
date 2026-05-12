@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>My Cases</h2>
+
+<!-- ================= TICKET LIST ================= -->
+{% if tickets %}
+<div class="card">
+    <h3>Your Tickets</h3>
+
+    <form method="POST" action="/prediction/compare/">
+        {% csrf_token %}
+
+        <table border="1" cellpadding="10" width="100%">
+            <thead>
+                <tr>
+                    <th>Select</th>
+                    <th>Violation</th>
+                    <th>Location</th>
+                    <th>Fine</th>
+                    <th>Recommendation</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for ticket in tickets %}
+                <tr>
+                    <!-- Comparison checkbox -->
+                    <td>
+                        <input type="checkbox" name="ticket_ids" value="{{ ticket.id }}">
+                    </td>
+
+                    <td>{{ ticket.violation_type }}</td>
+                    <td>{{ ticket.location }}</td>
+                    <td>₹{{ ticket.fine_amount }}</td>
+
+                    <td>
+                        {% if ticket.recommendation == "Contest Ticket" %}
+                            <span style="color: green; font-weight: bold;">
+                                {{ ticket.recommendation }}
+                            </span>
+                        {% elif ticket.recommendation == "Pay Fine" %}
+                            <span style="color: red; font-weight: bold;">
+                                {{ ticket.recommendation }}
+                            </span>
+                        {% else %}
+                            <span style="color: orange; font-weight: bold;">
+                                {{ ticket.recommendation }}
+                            </span>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        <!-- View -->
+                        <a href="/tickets/detail/{{ ticket.id }}/" class="btn btn-primary">View</a>
+
+                        <!-- Edit -->
+                        <a href="/tickets/edit/{{ ticket.id }}/" class="btn btn-success">Edit</a>
+
+                        <!-- Delete -->
+                        <a href="/tickets/delete/{{ ticket.id }}/" class="btn btn-danger">Delete</a>
+
+                        <!-- ✅ FINAL FIXED REMINDER BUTTON -->
+                        <a href="/reminders/set/{{ ticket.id }}/" class="btn btn-primary">
+                            Reminder
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <br>
+
+        <button type="submit" class="btn btn-success">
+            Compare Selected Tickets
+        </button>
+    </form>
+</div>
+
+{% else %}
+<div class="card">
+    <p>No tickets found. Upload a ticket to get started.</p>
+</div>
+{% endif %}
+
+
+<!-- ================= COMPARISON RESULT ================= -->
+{% if ticket1 and ticket2 %}
+<div class="card">
+    <h3>Comparison Result</h3>
+
+    <table border="1" cellpadding="10" width="100%">
+        <tr>
+            <th>Field</th>
+            <th>Ticket 1</th>
+            <th>Ticket 2</th>
+        </tr>
+
+        <tr>
+            <td>Violation</td>
+            <td>{{ ticket1.violation_type }}</td>
+            <td>{{ ticket2.violation_type }}</td>
+        </tr>
+
+        <tr>
+            <td>Fine</td>
+            <td>₹{{ ticket1.fine_amount }}</td>
+            <td>₹{{ ticket2.fine_amount }}</td>
+        </tr>
+
+        <tr>
+            <td>Risk Index</td>
+            <td>{{ ticket1.risk_index }}</td>
+            <td>{{ ticket2.risk_index }}</td>
+        </tr>
+
+        <tr>
+            <td>Recommendation</td>
+            <td>{{ ticket1.recommendation }}</td>
+            <td>{{ ticket2.recommendation }}</td>
+        </tr>
+    </table>
+</div>
+{% endif %}
+
+
+<!-- ================= REMINDER LIST ================= -->
+{% if reminders %}
+<div class="card">
+    <h3>Your Reminders</h3>
+
+    <table border="1" cellpadding="10" width="100%">
+        <tr>
+            <th>Ticket ID</th>
+            <th>Reminder Date</th>
+            <th>Status</th>
+        </tr>
+
+        {% for reminder in reminders %}
+        <tr>
+            <td>{{ reminder.ticket.id }}</td>
+            <td>{{ reminder.reminder_date }}</td>
+            <td>
+                {% if reminder.is_sent %}
+                    <span style="color: green;">Sent</span>
+                {% else %}
+                    <span style="color: orange;">Pending</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <a href="/reminders/run/" class="btn btn-primary">
+        Run Reminder Scheduler
+    </a>
+</div>
+{% endif %}
+
+{% endblock %}

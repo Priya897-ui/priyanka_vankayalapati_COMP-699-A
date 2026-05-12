@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card" style="max-width: 400px; margin: auto;">
+    <h2 style="text-align: center;">Login</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <!-- Username -->
+        <label>Username</label>
+        <input type="text" name="username" placeholder="Enter username" required>
+
+        <!-- Password -->
+        <label>Password</label>
+        <input type="password" name="password" placeholder="Enter password" required>
+
+        <!-- Error Messages -->
+        {% if form.errors %}
+            <div class="message error">
+                Invalid username or password.
+            </div>
+        {% endif %}
+
+        <!-- Submit -->
+        <button type="submit" class="btn btn-primary" style="width:100%;">
+            Login
+        </button>
+
+    </form>
+
+    <br>
+
+    <!-- Register Redirect -->
+    <p style="text-align:center;">
+        Don't have an account?
+        <a href="/accounts/register/">Register here</a>
+    </p>
+</div>
+
+{% endblock %}

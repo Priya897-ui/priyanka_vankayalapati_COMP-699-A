@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Prediction Result</h2>
+
+<!-- ================= Ticket Details ================= -->
+<div class="card">
+    <h3>Ticket Details</h3>
+
+    <p><strong>Violation:</strong> {{ ticket.violation_type }}</p>
+    <p><strong>Location:</strong> {{ ticket.location }}</p>
+    <p><strong>Fine Amount:</strong> ₹{{ ticket.fine_amount }}</p>
+    <p><strong>Date:</strong> {{ ticket.ticket_date }}</p>
+</div>
+
+<!-- ================= Prediction Output ================= -->
+<div class="card">
+    <h3>AI Prediction</h3>
+
+    <p><strong>Success Probability:</strong> {{ prediction.success_probability }}</p>
+    <p><strong>Risk Index:</strong> {{ prediction.risk_index }}</p>
+
+    <!-- Recommendation Highlight -->
+    <p>
+        <strong>Recommendation:</strong>
+        {% if prediction.recommendation == "Contest Ticket" %}
+            <span style="color: green; font-weight: bold;">
+                {{ prediction.recommendation }}
+            </span>
+        {% elif prediction.recommendation == "Pay Fine" %}
+            <span style="color: red; font-weight: bold;">
+                {{ prediction.recommendation }}
+            </span>
+        {% else %}
+            <span style="color: orange; font-weight: bold;">
+                {{ prediction.recommendation }}
+            </span>
+        {% endif %}
+    </p>
+</div>
+
+<!-- ================= Explanation ================= -->
+<div class="card">
+    <h3>Explanation</h3>
+
+    <p>{{ prediction.explanation }}</p>
+
+    <p style="font-size: 14px; color: gray;">
+        Note: This is system-generated guidance and not legal advice.
+    </p>
+</div>
+
+<!-- ================= Actions ================= -->
+<div class="card">
+    <h3>Next Actions</h3>
+
+    <a href="/tickets/cases/" class="btn btn-primary">View All Cases</a>
+
+    <a href="/reminders/set/{{ ticket.id }}/" class="btn btn-success">
+        Set Reminder
+    </a>
+
+    <a href="/prediction/compare/" class="btn btn-primary">
+        Compare Tickets
+    </a>
+
+    <a href="/tickets/edit/{{ ticket.id }}/" class="btn btn-danger">
+        Edit Ticket
+    </a>
+</div>
+
+{% endblock %}

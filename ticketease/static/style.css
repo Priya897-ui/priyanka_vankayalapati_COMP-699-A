@@ -1,0 +1,144 @@
+/* ================= GLOBAL ================= */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f9;
+}
+
+/* ================= NAVBAR ================= */
+.navbar {
+    background-color: #1e293b;
+    color: white;
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar h2 {
+    margin: 0;
+}
+
+.nav-links a {
+    color: white;
+    margin-left: 15px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+/* ================= CONTAINER ================= */
+.container {
+    padding: 20px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+/* ================= CARDS ================= */
+.card {
+    background: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ================= BUTTONS ================= */
+.btn {
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+.btn-primary {
+    background-color: #2563eb;
+    color: white;
+}
+
+.btn-success {
+    background-color: #16a34a;
+    color: white;
+}
+
+.btn-danger {
+    background-color: #dc2626;
+    color: white;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+/* ================= FORM ================= */
+input, select {
+    padding: 10px;
+    width: 100%;
+    margin-top: 6px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* ================= TABLE ================= */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table th {
+    background-color: #1e293b;
+    color: white;
+}
+
+table th, table td {
+    padding: 10px;
+    text-align: left;
+}
+
+/* ================= MESSAGES ================= */
+.message {
+    padding: 12px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    color: white;
+}
+
+.success {
+    background-color: #16a34a;
+}
+
+.error {
+    background-color: #dc2626;
+}
+
+/* ================= FOOTER ================= */
+footer {
+    text-align: center;
+    padding: 10px;
+    background: #1e293b;
+    color: white;
+    margin-top: 20px;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-links {
+        margin-top: 10px;
+    }
+
+    table {
+        font-size: 12px;
+    }
+}
